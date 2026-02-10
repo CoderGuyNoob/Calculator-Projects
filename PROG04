@@ -1,61 +1,32 @@
 ClrHome
 Disp "TRIANGLE SIM"
-Input "RATIO:",R
-Menu("TEST TYPE","SAS",1,"ASA",2,"AAA",3,"SSS",4)
+Menu("TEST TYPE","AA",1,"SAS",2,"SSS",3)
 
 Lbl 1
-ClrHome
+Disp "AA"
+Input "ANG 1A:",A
+Input "ANG 1B:",B
+Disp "TRI 2"
+Input "ANG 2A:",D
+Input "ANG 2B:",E
+If A=D and B=E
+Goto S
+Goto N
+
+Lbl 2
 Disp "SAS"
 Input "S1:",A
 Input "S2:",B
-Input "ANGLE:",C
+Input "ANG:",C
 Disp "TRI 2"
 Input "S1:",D
 Input "S2:",E
-Input "ANGLE:",F
-If (C=F) and (abs(D/A-R)<.01) and (abs(E/B-R)<.01)
-Then
+Input "ANG:",F
+If C=F and abs(D/A-E/B)<.001
 Goto S
-Else
 Goto N
-End
-
-Lbl 2
-ClrHome
-Disp "ASA"
-Input "A1:",A
-Input "A2:",B
-Input "SIDE:",C
-Disp "TRI 2"
-Input "A1:",D
-Input "A2:",E
-Input "SIDE:",F
-If (A=D) and (B=E) and (abs(F/C-R)<.01)
-Then
-Goto S
-Else
-Goto N
-End
 
 Lbl 3
-ClrHome
-Disp "AAA"
-Input "A1:",A
-Input "A2:",B
-Input "A3:",C
-Disp "TRI 2"
-Input "A1:",D
-Input "A2:",E
-Input "A3:",F
-If (A=D) and (B=E) and (C=F)
-Then
-Goto S
-Else
-Goto N
-End
-
-Lbl 4
-ClrHome
 Disp "SSS"
 Input "S1:",A
 Input "S2:",B
@@ -64,19 +35,13 @@ Disp "TRI 2"
 Input "S1:",D
 Input "S2:",E
 Input "S3:",F
-If (abs(D/A-R)<.01) and (abs(E/B-R)<.01) and (abs(F/C-R)<.01)
-Then
+If abs(D/A-E/B)<.001 and abs(E/B-F/C)<.001
 Goto S
-Else
 Goto N
-End
 
 Lbl S
-ClrHome
 Disp "SIMILAR"
 Stop
 
 Lbl N
-ClrHome
 Disp "NOT SIMILAR"
-Stop
