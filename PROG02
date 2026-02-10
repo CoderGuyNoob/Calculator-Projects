@@ -1,0 +1,28 @@
+ClrHome
+Menu("CHOOSE","VERSTA",1,"STAVER",2,"QUAD",3)
+Lbl 1
+Input "A = ",A
+Input "H = ",H
+Input "K = ",K
+H*2*A→B
+(H²*A)+K→C
+Disp B,C
+Stop
+Lbl 2
+Input "A = ",A
+Input "B = ",B
+Input "C = ",C
+(­B)/2A→H
+AH²+BH+C→K
+Disp ­H,K
+Stop
+
+Lbl 4
+
+Input "A = ",A
+Input "B = ",B
+Input "C = ",C
+(­B+√(B²-4AC))/(2A)→D
+(­B-√(B²-4AC))/(2A)→E
+Disp D,E
+Stop

@@ -1,0 +1,82 @@
+ClrHome
+Disp "TRIANGLE SIM"
+Input "RATIO:",R
+Menu("TEST TYPE","SAS",1,"ASA",2,"AAA",3,"SSS",4)
+
+Lbl 1
+ClrHome
+Disp "SAS"
+Input "S1:",A
+Input "S2:",B
+Input "ANGLE:",C
+Disp "TRI 2"
+Input "S1:",D
+Input "S2:",E
+Input "ANGLE:",F
+If (C=F) and (abs(D/A-R)<.01) and (abs(E/B-R)<.01)
+Then
+Goto S
+Else
+Goto N
+End
+
+Lbl 2
+ClrHome
+Disp "ASA"
+Input "A1:",A
+Input "A2:",B
+Input "SIDE:",C
+Disp "TRI 2"
+Input "A1:",D
+Input "A2:",E
+Input "SIDE:",F
+If (A=D) and (B=E) and (abs(F/C-R)<.01)
+Then
+Goto S
+Else
+Goto N
+End
+
+Lbl 3
+ClrHome
+Disp "AAA"
+Input "A1:",A
+Input "A2:",B
+Input "A3:",C
+Disp "TRI 2"
+Input "A1:",D
+Input "A2:",E
+Input "A3:",F
+If (A=D) and (B=E) and (C=F)
+Then
+Goto S
+Else
+Goto N
+End
+
+Lbl 4
+ClrHome
+Disp "SSS"
+Input "S1:",A
+Input "S2:",B
+Input "S3:",C
+Disp "TRI 2"
+Input "S1:",D
+Input "S2:",E
+Input "S3:",F
+If (abs(D/A-R)<.01) and (abs(E/B-R)<.01) and (abs(F/C-R)<.01)
+Then
+Goto S
+Else
+Goto N
+End
+
+Lbl S
+ClrHome
+Disp "SIMILAR"
+Stop
+
+Lbl N
+ClrHome
+Disp "NOT SIMILAR"
+Stop

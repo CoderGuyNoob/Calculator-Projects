@@ -1,0 +1,100 @@
+Menu("MAIN","FORMULAS",2,"SOLVE",6)
+
+Lbl 2
+ClrHome
+Input "X1=",A
+Input "Y1=",B
+Input "X2=",C
+Input "Y2=",D
+Menu("Formulas","DIS",3,"MID",4,"END",5,"SLO",12)
+
+Lbl 3
+(C-A)²+(D-B)²→N
+Disp √(N)
+1→H
+N→I
+For(S,1,int(√(N)+.1))
+If 0=fPart(round(N/S²,8))
+Then
+S→H
+N/S²→I
+End
+End
+Disp toString(H)+"√("+toString(I)+")"
+Pause 
+ClrHome
+Stop
+
+Lbl 4
+(A+C)/2→E
+(B+D)/2→F
+Disp "MIDPOINT:"
+Disp E,F
+Pause 
+Stop
+
+Lbl 5
+2C-A→E
+2D-B→F
+Disp "ENDPOINT:"
+Disp E,F
+Pause 
+Stop
+
+Lbl 6
+ClrHome
+Input "X1=",A
+Input "Y1=",B
+Menu("FROM D OR CORD","D",7,"CORD",8)
+
+Lbl 7
+Input "D=",C
+Goto 9
+
+Lbl 8
+Input "X2=",M
+Input "Y2=",N
+√((M-A)²+(N-B)²)→C
+Goto 9
+
+Lbl 9
+Menu("FIND X OR Y","X",10,"Y",11)
+
+Lbl 10
+Input "Y=",D
+A+√(C²-(D-B)²)→P
+A-√(C²-(D-B)²)→V
+Disp "X POSS:",P,V
+Stop
+
+Lbl 11
+Input "X=",D
+B+√(C²-(D-A)²)→P
+B-√(C²-(D-A)²)→V
+Disp "Y POSS:",P,V
+Stop
+
+Lbl 12
+(D-B)/(C-A)→E
+Disp "SLOPE:",E
+Stop
+
+Lbl 13
+Input "X2=",C
+Input "Y2=",D
+Input "X3=",E
+Input "Y3=",F
+(D-B)/(C-A)→S
+Menu("FIND X OR Y","X",14,"Y",15)
+
+Lbl 14
+Input "Y4=",G
+(F-G)/S+E→P
+Disp "X4=",P
+Stop
+
+Lbl 15
+Input "X4=",G
+S(G-E)+F→P
+Disp "Y4=",P
+Stop
