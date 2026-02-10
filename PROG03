@@ -5,30 +5,34 @@ SortA(L₁)
 L₁(1)→A
 L₁(2)→B
 L₁(3)→C
+ 
+ (A²+B²)→D
 
+ If A+B<C
+ Then
+ Disp "ERROR"
+ Else
+ If D=C²
+ Then
+ Disp "RIGHT"
+ Else
+ If D<C²
+ Then
+ Disp "OBTUSE"
+ Else
+ Disp "ACUTE"
+ End
+ End
+ End
 
-If A+B<C
-Then
-Disp "ERROR"
-Else:If A²+B²=C²
-Then
-Disp "RIGHT"
-Else:If A²+B²<C²
-Then
-Disp "OBTUSE"
-Else
-Disp "ACUTE"
-End
-End
-End
-
-If A=C
-Then
-Disp "EQUILATERAL"
-Else:If A=B or B=C
-Then
-Disp "ISOSCELES"
-Else
-Disp "SCALENE"
-End
-End
+ If A=C
+ Then
+ Disp "EQUILATERAL"
+ Else
+ If A=B or B=C
+ Then
+ Disp "ISOSCELES"
+ Else
+ Disp "SCALENE"
+ End
+ End
