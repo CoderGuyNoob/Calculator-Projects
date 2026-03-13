@@ -1,38 +1,38 @@
-ClrHome
-Prompt A,B,C
-{A,B,C}→L₁
-SortA(L₁)
-L₁(1)→A
-L₁(2)→B
-L₁(3)→C
- 
- (A²+B²)→D
+Menu("QUADRATICS","QUAD",3)
 
- If A+B<C
- Then
- Disp "ERROR"
- Else
- If D=C²
- Then
- Disp "RIGHT"
- Else
- If D<C²
- Then
- Disp "OBTUSE"
- Else
- Disp "ACUTE"
- End
- End
- End
+Lbl 3
+Input "A=",A
+Input "B=",B
+Input "C=",C
+B²-4*A*C→N
+Goto SIMPLIFY        // Simplify discriminant
+(-B+N)/(2*A)→D
+(-B-N)/(2*A)→E
+Disp "ROOTS"
+Disp toString(D)
+Disp toString(E)
+Stop
 
- If A=C
- Then
- Disp "EQUILATERAL"
- Else
- If A=B or B=C
- Then
- Disp "ISOSCELES"
- Else
- Disp "SCALENE"
- End
- End
+Lbl SIMPLIFY
+1→H
+N→I
+For(S,1,int(√(N)+.1))
+If 0=fPart(round(N/S²,8))
+Then
+S→H
+N/S²→I
+End
+End
+// Rationalization included for full simplifier
+If I=1
+Then
+Disp toString(H)
+Else
+If H=1
+Then
+Disp "√("+toString(I)+")"
+Else
+Disp toString(H)+"√("+toString(I)+")"
+End
+End
+Stop

@@ -1,24 +1,62 @@
-ClrHome
-Disp "TRIANGLE SIM"
-Menu("TEST TYPE","AA",1,"SAS",2,"SSS",3)
+Menu("TRI TOOLS","TYPE",1,"SIMILAR",2)
 
 Lbl 1
-Disp "AA"
-Input "ANG 1A:",A
-Input "ANG 1B:",B
-Disp "TRI 2"
-Input "ANG 2A:",D
-Input "ANG 2B:",E
+Prompt A,B,C
+{A,B,C}→L₁
+SortA(L₁)
+L₁(1)→A
+L₁(2)→B
+L₁(3)→C
+
+A²+B²→D
+
+If A+B<C
+Then
+Disp "ERROR"
+Stop
+End
+
+If D=C²
+Then
+Disp "RIGHT"
+Else
+If D<C²
+Then
+Disp "OBTUSE"
+Else
+Disp "ACUTE"
+End
+End
+
+If A=C
+Then
+Disp "EQUILATERAL"
+Else
+If A=B or B=C
+Then
+Disp "ISOSCELES"
+Else
+Disp "SCALENE"
+End
+End
+Stop
+
+Lbl 2
+Menu("SIM TEST","AA",3,"SAS",4,"SSS",5)
+
+Lbl 3
+Input "A1:",A
+Input "A2:",B
+Input "A1:",D
+Input "A2:",E
 If A=D and B=E
 Goto S
 Goto N
 
-Lbl 2
-Disp "SAS"
+Lbl 4
 Input "S1:",A
 Input "S2:",B
 Input "ANG:",C
-Disp "TRI 2"
 Input "S1:",D
 Input "S2:",E
 Input "ANG:",F
@@ -26,12 +64,10 @@ If C=F and abs(D/A-E/B)<.001
 Goto S
 Goto N
 
-Lbl 3
-Disp "SSS"
+Lbl 5
 Input "S1:",A
 Input "S2:",B
 Input "S3:",C
-Disp "TRI 2"
 Input "S1:",D
 Input "S2:",E
 Input "S3:",F
@@ -45,3 +81,4 @@ Stop
 
 Lbl N
 Disp "NOT SIMILAR"
+Stop
