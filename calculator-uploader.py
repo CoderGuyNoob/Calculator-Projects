@@ -1,7 +1,10 @@
 import os
 import sys
+from tivars import TIProgram
+
 
 class CalculatorUploader:
+
     def __init__(self):
         self.repo_dir = os.path.dirname(os.path.abspath(__file__))
         self.programs = {}
@@ -9,100 +12,141 @@ class CalculatorUploader:
 
     def load_programs(self):
         """Load all PROG files from the repository"""
-        for i in range(1, 5):
-            prog_name = f"PROG{i:02d}"
-            prog_path = os.path.join(self.repo_dir, prog_name)
-            if os.path.exists(prog_path):
-                with open(prog_path, 'r') as f:
-                    self.programs[prog_name] = f.read()
+
+        for file in os.listdir(self.repo_dir):
+
+            if file.startswith("PROG") and "." not in file:
+
+                path = os.path.join(self.repo_dir, file)
+
+                with open(path, "r") as f:
+                    self.programs[file] = f.read()
 
     def list_programs(self):
         """List all available calculator programs"""
-        print("\n=== Available Calculator Programs ===\n")
+
+        print("\nAvailable Programs\n")
+
         if not self.programs:
-            print("No programs found!")
+            print("No programs found")
             return
-        
-        for i, prog in enumerate(sorted(self.programs.keys()), 1):
-            print(f"{i}. {prog}")
+
+        for name in sorted(self.programs.keys()):
+            print(name)
+
         print()
 
     def view_program(self, prog_name):
-        """Display the code for a specific program"""
+        """Show program source"""
+
         if prog_name not in self.programs:
-            print(f"Program '{prog_name}' not found!")
+            print("Program not found")
             return
-        
-        print(f"\n=== {prog_name} Code ===\n")
+
+        print("\n" + prog_name)
+        print("-" * 40)
         print(self.programs[prog_name])
         print()
 
-    def prepare_program(self, prog_name):
-        """Prepare program for copying to TI Connect CE"""
+    def convert_program(self, prog_name):
+        """Convert a program to .8xp"""
+
         if prog_name not in self.programs:
-            print(f"Program '{prog_name}' not found!")
+            print("Program not found")
             return
-        
+
         code = self.programs[prog_name]
-        print(f"\n=== Ready to Copy for TI Connect CE ===\n")
-        print("Copy the code below and paste into TI Connect CE:\n")
-        print("-" * 60)
-        print(code)
-        print("-" * 60)
-        print("\nSteps:")
-        print("1. Copy the code above (Ctrl+A then Ctrl+C)")
-        print("2. Open TI Connect CE")
-        print("3. Create a new program or paste into existing program")
-        print("4. Connect your TI-84 and transfer to calculator")
-        print()
+
+        program = TIProgram()
+        program.name = prog_name
+        program.set_text(code)
+
+        output_path = os.path.join(self.repo_dir, prog_name + ".8xp")
+
+        program.save(output_path)
+
+        print("Created:", prog_name + ".8xp")
+
+    def convert_all(self):
+        """Convert all programs"""
+
+        if not self.programs:
+            print("No programs to convert")
+            return
+
+        for prog in self.programs:
+            self.convert_program(prog)
 
     def show_help(self):
-        """Display help information"""
+
         print("""
-=== Calculator Uploader CLI ===
+Calculator Uploader CLI
 
-Usage: python calculator-uploader.py [command] [program]
+Commands
 
-Commands:
-  list              - Show all available programs
-  view [PROG##]     - View a specific program (e.g., view PROG01)
-  prepare [PROG##]  - Prepare program for TI Connect CE upload
-  help              - Show this help message
+list
+    Show all available programs
 
-Examples:
-  python calculator-uploader.py list
-  python calculator-uploader.py view PROG01
-  python calculator-uploader.py prepare PROG02
-        """)
+view PROG##
+    View program source
+
+convert PROG##
+    Convert a program to .8xp
+
+build
+    Convert all programs to .8xp
+
+help
+    Show this help message
+
+Examples
+
+python calculator-uploader.py list
+python calculator-uploader.py view PROG01
+python calculator-uploader.py convert PROG01
+python calculator-uploader.py build
+""")
+
 
 def main():
+
     uploader = CalculatorUploader()
-    
+
     if len(sys.argv) < 2:
         uploader.show_help()
         return
-    
-    command = sys.argv[1].lower()
-    
-    if command == 'list':
-        uploader.list_programs()
-    elif command == 'view':
-        if len(sys.argv) < 3:
-            print("Error: Please specify a program (e.g., view PROG01)")
-            return
-        prog_name = sys.argv[2].upper()
-        uploader.view_program(prog_name)
-    elif command == 'prepare':
-        if len(sys.argv) < 3:
-            print("Error: Please specify a program (e.g., prepare PROG01)")
-            return
-        prog_name = sys.argv[2].upper()
-        uploader.prepare_program(prog_name)
-    elif command == 'help':
-        uploader.show_help()
-    else:
-        print(f"Unknown command: {command}")
-        print("Type 'python calculator-uploader.py help' for usage information")
 
-if __name__ == '__main__':
+    command = sys.argv[1].lower()
+
+    if command == "list":
+        uploader.list_programs()
+
+    elif command == "view":
+
+        if len(sys.argv) < 3:
+            print("Specify program like PROG01")
+            return
+
+        uploader.view_program(sys.argv[2].upper())
+
+    elif command == "convert":
+
+        if len(sys.argv) < 3:
+            print("Specify program like PROG01")
+            return
+
+        uploader.convert_program(sys.argv[2].upper())
+
+    elif command == "build":
+        uploader.convert_all()
+
+    elif command == "help":
+        uploader.show_help()
+
+    else:
+        print("Unknown command")
+        uploader.show_help()
+
+
+if __name__ == "__main__":
     main()
