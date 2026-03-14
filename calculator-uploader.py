@@ -2,27 +2,30 @@ import os
 import sys
 from tivars import TIProgram
 
-
 class CalculatorUploader:
-
     def __init__(self):
         self.repo_dir = os.path.dirname(os.path.abspath(__file__))
+        self.src_dir = os.path.join(self.repo_dir, "src")
         self.build_dir = os.path.join(self.repo_dir, "build")
+
+        # Create folders if missing
+        os.makedirs(self.src_dir, exist_ok=True)
         os.makedirs(self.build_dir, exist_ok=True)
 
         self.programs = {}
         self.load_programs()
 
     def load_programs(self):
-        """Load all PROG files (ignore .bak and .8xp)"""
-        for file in os.listdir(self.repo_dir):
-            # Only files starting with PROG
+        """Load all program files from src/ (ignore .bak and .8xp)"""
+        for file in os.listdir(self.src_dir):
+            # Only process files starting with PROG
             if not file.startswith("PROG"):
                 continue
-            # Skip binary or backup files
-            if file.endswith(".8xp") or file.endswith(".bak"):
+            # Skip backup and compiled files
+            if file.endswith(".bak") or file.endswith(".8xp"):
                 continue
-            path = os.path.join(self.repo_dir, file)
+
+            path = os.path.join(self.src_dir, file)
             try:
                 with open(path, "r", encoding="utf-8") as f:
                     self.programs[file] = f.read()
@@ -31,7 +34,7 @@ class CalculatorUploader:
 
     def list_programs(self):
         if not self.programs:
-            print("No programs found!")
+            print("No programs found in src/")
             return
         print("\nAvailable Programs:")
         for name in sorted(self.programs):
@@ -54,9 +57,9 @@ class CalculatorUploader:
 
         code = self.programs[prog_name]
 
-        # Use current tivars API
+        # Convert text to TI program
         program = TIProgram.from_source(code)
-        program.name = prog_name[:8]  # TI-84 name limit
+        program.name = prog_name[:8]  # TI-84 program name limit
 
         output = os.path.join(self.build_dir, prog_name + ".8xp")
         program.save(output)
@@ -96,7 +99,6 @@ Example:
 python calculator-uploader.py build
 """)
 
-
 def main():
     uploader = CalculatorUploader()
 
@@ -125,7 +127,6 @@ def main():
     else:
         print(f"Unknown command '{cmd}'\n")
         uploader.show_help()
-
 
 if __name__ == "__main__":
     main()
