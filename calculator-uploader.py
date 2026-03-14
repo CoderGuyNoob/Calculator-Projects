@@ -7,71 +7,80 @@ class CalculatorUploader:
 
     def __init__(self):
         self.repo_dir = os.path.dirname(os.path.abspath(__file__))
+        self.src_dir = os.path.join(self.repo_dir, "src")
+        self.build_dir = os.path.join(self.repo_dir, "build")
+
         self.programs = {}
+
+        os.makedirs(self.src_dir, exist_ok=True)
+        os.makedirs(self.build_dir, exist_ok=True)
+
         self.load_programs()
 
     def load_programs(self):
-        """Load all PROG files from the repository"""
+        """Load program source files"""
 
-        for file in os.listdir(self.repo_dir):
+        for file in os.listdir(self.src_dir):
 
-            if file.startswith("PROG") and "." not in file:
+            if not file.endswith(".txt"):
+                continue
 
-                path = os.path.join(self.repo_dir, file)
+            prog_name = file.replace(".txt", "")
 
-                with open(path, "r") as f:
-                    self.programs[file] = f.read()
+            path = os.path.join(self.src_dir, file)
+
+            try:
+                with open(path, "r", encoding="utf-8") as f:
+                    self.programs[prog_name] = f.read()
+            except Exception as e:
+                print(f"Skipping {file}: {e}")
 
     def list_programs(self):
-        """List all available calculator programs"""
-
-        print("\nAvailable Programs\n")
 
         if not self.programs:
-            print("No programs found")
+            print("No programs found in src/")
             return
 
-        for name in sorted(self.programs.keys()):
+        print("\nAvailable Programs:\n")
+
+        for name in sorted(self.programs):
             print(name)
 
         print()
 
-    def view_program(self, prog_name):
-        """Show program source"""
+    def view_program(self, prog):
 
-        if prog_name not in self.programs:
+        if prog not in self.programs:
             print("Program not found")
             return
 
-        print("\n" + prog_name)
+        print("\n" + prog)
         print("-" * 40)
-        print(self.programs[prog_name])
+        print(self.programs[prog])
         print()
 
-    def convert_program(self, prog_name):
-        """Convert a program to .8xp"""
+    def convert_program(self, prog):
 
-        if prog_name not in self.programs:
+        if prog not in self.programs:
             print("Program not found")
             return
 
-        code = self.programs[prog_name]
+        code = self.programs[prog]
 
         program = TIProgram()
-        program.name = prog_name
+        program.name = prog[:8]  # TI program name limit
         program.set_text(code)
 
-        output_path = os.path.join(self.repo_dir, prog_name + ".8xp")
+        output = os.path.join(self.build_dir, prog + ".8xp")
 
-        program.save(output_path)
+        program.save(output)
 
-        print("Created:", prog_name + ".8xp")
+        print("Created:", output)
 
-    def convert_all(self):
-        """Convert all programs"""
+    def build_all(self):
 
         if not self.programs:
-            print("No programs to convert")
+            print("No programs to build")
             return
 
         for prog in self.programs:
@@ -85,25 +94,19 @@ Calculator Uploader CLI
 Commands
 
 list
-    Show all available programs
+    List programs
 
-view PROG##
+view NAME
     View program source
 
-convert PROG##
-    Convert a program to .8xp
+convert NAME
+    Convert one program
 
 build
-    Convert all programs to .8xp
+    Convert all programs
 
-help
-    Show this help message
+Example
 
-Examples
-
-python calculator-uploader.py list
-python calculator-uploader.py view PROG01
-python calculator-uploader.py convert PROG01
 python calculator-uploader.py build
 """)
 
@@ -116,35 +119,31 @@ def main():
         uploader.show_help()
         return
 
-    command = sys.argv[1].lower()
+    cmd = sys.argv[1].lower()
 
-    if command == "list":
+    if cmd == "list":
         uploader.list_programs()
 
-    elif command == "view":
+    elif cmd == "view":
 
         if len(sys.argv) < 3:
-            print("Specify program like PROG01")
+            print("Specify program name")
             return
 
-        uploader.view_program(sys.argv[2].upper())
+        uploader.view_program(sys.argv[2])
 
-    elif command == "convert":
+    elif cmd == "convert":
 
         if len(sys.argv) < 3:
-            print("Specify program like PROG01")
+            print("Specify program name")
             return
 
-        uploader.convert_program(sys.argv[2].upper())
+        uploader.convert_program(sys.argv[2])
 
-    elif command == "build":
-        uploader.convert_all()
-
-    elif command == "help":
-        uploader.show_help()
+    elif cmd == "build":
+        uploader.build_all()
 
     else:
-        print("Unknown command")
         uploader.show_help()
 
 
