@@ -1,38 +1,41 @@
-Menu("QUADRATICS","QUAD",3)
+ClrHome
+Menu("SOLVE","QUAD",1,"SIMPLIFY √",2)
 
-Lbl 3
-Input "A=",A
-Input "B=",B
-Input "C=",C
-B²-4*A*C→N
-Goto SIMPLIFY        // Simplify discriminant
-(-B+N)/(2*A)→D
-(-B-N)/(2*A)→E
-Disp "ROOTS"
-Disp toString(D)
-Disp toString(E)
+Lbl 1
+Input "A:",A
+Input "B:",B
+Input "C:",C
+(B²-4*A*C)→N
+If N<0
+Then
+Disp "NON-REAL"
+Stop
+End
+((0-B)+√(N))/(2*A)→D
+((0-B)-√(N))/(2*A)→E
+Disp "X=",D,E
 Stop
 
-Lbl SIMPLIFY
+Lbl 2
+Input "VALUE:",N
 1→H
 N→I
-For(S,1,int(√(N)+.1))
-If 0=fPart(round(N/S²,8))
+For(S,int(√(abs(N))+.1),1,0-1)
+If fPart(N/S²)=0
 Then
 S→H
 N/S²→I
+1→S
 End
 End
-// Rationalization included for full simplifier
 If I=1
 Then
-Disp toString(H)
+Disp "SIMP: "+toString(H)
 Else
 If H=1
 Then
-Disp "√("+toString(I)+")"
+Disp "SIMP: √("+toString(I)+")"
 Else
-Disp toString(H)+"√("+toString(I)+")"
+Disp "SIMP: "+toString(H)+"√("+toString(I)+")"
 End
 End
-Stop

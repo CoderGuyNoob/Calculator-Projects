@@ -1,34 +1,29 @@
-Input "X1=",A
-Input "Y1=",B
-Menu("FROM D OR CORD","D",7,"CORD",8)
+ClrHome
+Input "X1:",A
+Input "Y1:",B
+Input "DIST:",C
+Menu("FIND MISSING","X-COORD",X,"Y-COORD",Y)
 
-Lbl 7
-Input "D=",C
-Goto 9
-
-Lbl 8
-Input "X2=",M
-Input "Y2=",N
-√((M-A)²+(N-B)²)→C
-Goto 9
-
-Lbl 9
-Menu("FIND X OR Y","X",10,"Y",11)
-
-Lbl 10
-Input "Y=",D
-A+√(C²-(D-B)²)→P
-A-√(C²-(D-B)²)→V
-Disp "X POSS:"
-Disp "("+toString(P)+","+toString(D)+")"
-Disp "("+toString(V)+","+toString(D)+")"
+Lbl X
+Input "KNOWN Y:",D
+(C²-(D-B)²)→N
+If N<0:Goto E
+A+√(N)→P
+A-√(N)→V
+Disp "X POSSIBILITIES:"
+Disp toString(P),toString(V)
 Stop
 
-Lbl 11
-Input "X=",D
-B+√(C²-(D-A)²)→P
-B-√(C²-(D-A)²)→V
-Disp "Y POSS:"
-Disp "("+toString(D)+","+toString(P)+")"
-Disp "("+toString(D)+","+toString(V)+")"
+Lbl Y
+Input "KNOWN X:",D
+(C²-(D-A)²)→N
+If N<0:Goto E
+B+√(N)→P
+B-√(N)→V
+Disp "Y POSSIBILITIES:"
+Disp toString(P),toString(V)
+Stop
+
+Lbl E
+Disp "DISTANCE TOO","SHORT"
 Stop

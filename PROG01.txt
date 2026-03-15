@@ -1,64 +1,56 @@
-Menu("COORD TOOLS","DIST",1,"MID",2,"END",3,"SLOPE",4)
-
-Lbl 1
+ClrHome
 Input "X1=",A
 Input "Y1=",B
 Input "X2=",C
 Input "Y2=",D
-(C-A)²+(D-B)²→N
-Goto SIMPLIFY       // Simplify distance
-Stop
-
-Lbl 2
-Input "X1=",A
-Input "Y1=",B
-Input "X2=",C
-Input "Y2=",D
-(A+C)/2→E
-(B+D)/2→F
-Disp "MIDPOINT"
-Disp "("+toString(E)+","+toString(F)+")"
-Stop
+Menu("FORMULAS","DIST",3,"MID",4,"END",5,"SLOPE",12)
 
 Lbl 3
-Input "X1=",A
-Input "Y1=",B
-Input "X2=",C
-Input "Y2=",D
-2C-A→E
-2D-B→F
-Disp "ENDPOINT"
-Disp "("+toString(E)+","+toString(F)+")"
-Stop
-
-Lbl 4
-Input "X1=",A
-Input "Y1=",B
-Input "X2=",C
-Input "Y2=",D
-(D-B)/(C-A)→E
-Disp "SLOPE="+toString(E)
-Stop
-
-Lbl SIMPLIFY
+(C-A)²+(D-B)²→N
+Disp "DEC: "+toString(√(N))
 1→H
 N→I
-For(S,1,int(√(N)+.1))
-If 0=fPart(round(N/S²,8))
+For(S,int(√(abs(N))+.1),1,0-1)
+If fPart(N/S²)=0
 Then
 S→H
 N/S²→I
+1→S
 End
 End
 If I=1
 Then
-Disp toString(H)
+Disp "SIMP: "+toString(H)
 Else
 If H=1
 Then
-Disp "√("+toString(I)+")"
+Disp "SIMP: √("+toString(I)+")"
 Else
-Disp toString(H)+"√("+toString(I)+")"
+Disp "SIMP: "+toString(H)+"√("+toString(I)+")"
 End
+End 
+Stop
+
+Lbl 4
+(A+C)/2→E
+(B+D)/2→F
+Disp "MIDPOINT:"
+Disp "("+toString(E)+","+toString(F)+")"
+Stop
+
+Lbl 5
+(2*C)-A→E
+(2*D)-B→F
+Disp "ENDPOINT:"
+Disp "("+toString(E)+","+toString(F)+")" 
+Stop
+
+Lbl 12
+If C-A=0
+Then
+Disp "SLOPE:","UNDEFINED"
+Else
+(D-B)/(C-A)→E
+Disp "SLOPE: "+toString(E)
 End
 Stop
