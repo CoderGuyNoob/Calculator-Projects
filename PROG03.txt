@@ -1,5 +1,5 @@
 ClrHome
-Menu("SOLVE","QUAD",1,"SIMPLIFY √",2)
+Menu("SOLVE","QUAD",1,"SIMPLIFY",2,"RATIONALIZE",3)
 
 Lbl 1
 Input "A:",A
@@ -19,12 +19,12 @@ Stop
 Lbl 2
 Input "VALUE:",N
 1→H
-N→I
-For(S,int(√(abs(N))+.1),1,0-1)
-If fPart(N/S²)=0
+round(N²,0)→I
+For(S,int(abs(N)+.1),1,0-1)
+If fPart(I/S²)=0
 Then
 S→H
-N/S²→I
+I/S²→I
 1→S
 End
 End
@@ -39,3 +39,33 @@ Else
 Disp "SIMP: "+toString(H)+"√("+toString(I)+")"
 End
 End
+Stop
+
+Lbl 3
+Input "NUMERATOR:",A
+Input "RAD DENOM:",N
+1→H
+round(N²,0)→I
+For(S,int(abs(N)+.1),1,0-1)
+If fPart(I/S²)=0
+Then
+S→H
+I/S²→I
+1→S
+End
+End
+A→U
+(H*I)→V
+gcd(U,V)→G
+U/G→U
+V/G→V
+Disp "RESULT:"
+If V=1
+Then
+Disp toString(U)+"√("+toString(I)+")"
+Else
+Disp toString(U)+"√("+toString(I)+")"
+Disp "-------"
+Disp toString(V)
+End
+Stop
