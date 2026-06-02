@@ -1,29 +1,34 @@
 ClrHome
-Input "X1:",A
-Input "Y1:",B
-Input "DIST:",C
-Menu("FIND MISSING","X-COORD",X,"Y-COORD",Y)
+Input "X1=",A
+Input "Y1=",B
+Input "D=",C
 
-Lbl X
-Input "KNOWN Y:",D
-(C²-(D-B)²)→N
-If N<0:Goto E
-A+√(N)→P
-A-√(N)→V
-Disp "X POSSIBILITIES:"
-Disp toString(P),toString(V)
+Menu("MISS","X",1,"Y",2)
+
+Lbl 1
+Input "Y=",D
+C²-(D-B)²→N
+
+If N<0
+Then
+Disp "NO SOL"
+Stop
+End
+
+Disp A+√(N)
+Disp A-√(N)
 Stop
 
-Lbl Y
-Input "KNOWN X:",D
-(C²-(D-A)²)→N
-If N<0:Goto E
-B+√(N)→P
-B-√(N)→V
-Disp "Y POSSIBILITIES:"
-Disp toString(P),toString(V)
-Stop
+Lbl 2
+Input "X=",D
+C²-(D-A)²→N
 
-Lbl E
-Disp "DISTANCE TOO","SHORT"
+If N<0
+Then
+Disp "NO SOL"
+Stop
+End
+
+Disp B+√(N)
+Disp B-√(N)
 Stop

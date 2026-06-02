@@ -1,77 +1,47 @@
 ClrHome
-Menu("SOLVE","QUAD",1,"SIMPLIFY",2,"RATIONALIZE",3)
+Menu("RAD","QUAD",1,"SIMP",2,"RAT",3)
 
 Lbl 1
-Input "A:",A
-Input "B:",B
-Input "C:",C
-(B²-4*A*C)→N
+Input "A=",A
+Input "B=",B
+Input "C=",C
+
+B²-4*A*C→N
+
 If N<0
 Then
-Disp "NON-REAL"
+Disp "NREAL"
 Stop
 End
-((0-B)+√(N))/(2*A)→D
-((0-B)-√(N))/(2*A)→E
-Disp "X=",D,E
+
+Disp ((-B)+√(N))/(2*A)
+Disp ((-B)-√(N))/(2*A)
 Stop
 
-
 Lbl 2
-Input "VALUE:",N
-0→T
-Goto 9
+Input "N=",N
 
+prgmRADSIM
+
+If I=1
+Then
+Disp H
+Else
+Disp H,I
+End
+Stop
 
 Lbl 3
-Input "CONST NUM:",A
-Input "RAD NUM:",B
-Input "CONST DEN:",C
-Input "RAD DEN:",D
-Input "RADICAND:",N
+Input "A=",A
+Input "B=",B
+Input "C=",C
+Input "D=",D
+Input "N=",N
 
-1→T
-Goto 9
-
-
-Lbl 3.5
 A*C-B*D*N→U
 B*C-A*D→V
 C²-D²*N→W
 
-Disp "RESULT:"
-Disp toString(U)+"+"+toString(V)+"√("+toString(I)+")"
-Disp "------"
-Disp toString(W)
-Stop
-
-
-Lbl 9
-1→H
-round(N²,0)→I
-For(S,int(abs(N)+.1),1,0-1)
-If fPart(I/S²)=0
-Then
-S→H
-I/S²→I
-1→S
-End
-End
-
-If T=1
-Then
-Goto 3.5
-End
-
-If I=1
-Then
-Disp "SIMP: "+toString(H)
-Else
-If H=1
-Then
-Disp "SIMP: √("+toString(I)+")"
-Else
-Disp "SIMP: "+toString(H)+"√("+toString(I)+")"
-End
-End
+Disp U,V
+Disp W
 Stop

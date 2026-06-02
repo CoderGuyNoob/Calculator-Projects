@@ -3,54 +3,41 @@ Input "X1=",A
 Input "Y1=",B
 Input "X2=",C
 Input "Y2=",D
-Menu("FORMULAS","DIST",3,"MID",4,"END",5,"SLOPE",12)
 
-Lbl 3
+Menu("GEO","DIST",1,"MID",2,"END",3,"SLOPE",4)
+
+Lbl 1
 (C-A)²+(D-B)²→N
-Disp "DEC: "+toString(√(N))
-1→H
-N→I
-For(S,int(√(abs(N))+.1),1,0-1)
-If fPart(N/S²)=0
-Then
-S→H
-N/S²→I
-1→S
-End
-End
+Disp √(N)
+
+prgmRADSIM
+
 If I=1
 Then
-Disp "SIMP: "+toString(H)
+Disp H
 Else
 If H=1
 Then
-Disp "SIMP: √("+toString(I)+")"
+Disp "√(",I,")"
 Else
-Disp "SIMP: "+toString(H)+"√("+toString(I)+")"
+Disp H,"√(",I,")"
 End
-End 
+End
+Stop
+
+Lbl 2
+Disp (A+C)/2,(B+D)/2
+Stop
+
+Lbl 3
+Disp 2*C-A,2*D-B
 Stop
 
 Lbl 4
-(A+C)/2→E
-(B+D)/2→F
-Disp "MIDPOINT:"
-Disp "("+toString(E)+","+toString(F)+")"
-Stop
-
-Lbl 5
-(2*C)-A→E
-(2*D)-B→F
-Disp "ENDPOINT:"
-Disp "("+toString(E)+","+toString(F)+")" 
-Stop
-
-Lbl 12
 If C-A=0
 Then
-Disp "SLOPE:","UNDEFINED"
+Disp "UNDEF"
 Else
-(D-B)/(C-A)→E
-Disp "SLOPE: "+toString(E)
+Disp (D-B)/(C-A)
 End
 Stop

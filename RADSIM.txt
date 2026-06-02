@@ -1,0 +1,10 @@
+1→H
+round(N²,0)→I
+For(S,int(abs(N)+.1),1,-1)
+If fPart(I/S²)=0
+Then
+S→H
+I/S²→I
+1→S
+End
+End
