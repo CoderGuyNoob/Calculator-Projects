@@ -16,8 +16,37 @@ End
 Disp "X=",D,E
 Stop
 
+
 Lbl 2
 Input "VALUE:",N
+0→T
+Goto 9
+
+
+Lbl 3
+Input "CONST NUM:",A
+Input "RAD NUM:",B
+Input "CONST DEN:",C
+Input "RAD DEN:",D
+Input "RADICAND:",N
+
+1→T
+Goto 9
+
+
+Lbl 3.5
+A*C-B*D*N→U
+B*C-A*D→V
+C²-D²*N→W
+
+Disp "RESULT:"
+Disp toString(U)+"+"+toString(V)+"√("+toString(I)+")"
+Disp "------"
+Disp toString(W)
+Stop
+
+
+Lbl 9
 1→H
 round(N²,0)→I
 For(S,int(abs(N)+.1),1,0-1)
@@ -28,6 +57,12 @@ I/S²→I
 1→S
 End
 End
+
+If T=1
+Then
+Goto 3.5
+End
+
 If I=1
 Then
 Disp "SIMP: "+toString(H)
@@ -38,34 +73,5 @@ Disp "SIMP: √("+toString(I)+")"
 Else
 Disp "SIMP: "+toString(H)+"√("+toString(I)+")"
 End
-End
-Stop
-
-Lbl 3
-Input "NUMERATOR:",A
-Input "RAD DENOM:",N
-1→H
-round(N²,0)→I
-For(S,int(abs(N)+.1),1,0-1)
-If fPart(I/S²)=0
-Then
-S→H
-I/S²→I
-1→S
-End
-End
-A→U
-(H*I)→V
-gcd(U,V)→G
-U/G→U
-V/G→V
-Disp "RESULT:"
-If V=1
-Then
-Disp toString(U)+"√("+toString(I)+")"
-Else
-Disp toString(U)+"√("+toString(I)+")"
-Disp "-------"
-Disp toString(V)
 End
 Stop
