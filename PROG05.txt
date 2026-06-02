@@ -1,7 +1,5 @@
 ClrHome
-
 Input "N=",N
-
 Menu("AREA","A",1,"S",2,"R",3)
 
 Lbl 1
@@ -11,10 +9,10 @@ Stop
 
 Lbl 2
 Input "S=",S
-Disp N*S²/(4*tan(180/N))
+Disp (N*S²)/(4*tan(180/N))
 Stop
 
 Lbl 3
 Input "R=",R
-Disp N*(2*R*sin(180/N))²/(4*tan(180/N))
+Disp (N*(2*R*sin(180/N))²)/(4*tan(180/N))
 Stop

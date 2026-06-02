@@ -14,8 +14,8 @@ Disp "NREAL"
 Stop
 End
 
-Disp ((-B)+√(N))/(2*A)
-Disp ((-B)-√(N))/(2*A)
+Disp ((0-B)+√(N))/(2*A)
+Disp ((0-B)-√(N))/(2*A)
 Stop
 
 Lbl 2

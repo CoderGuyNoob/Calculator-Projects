@@ -3,25 +3,17 @@ Input "X1=",A
 Input "Y1=",B
 Input "X2=",C
 Input "Y2=",D
-
 Menu("GEO","DIST",1,"MID",2,"END",3,"SLOPE",4)
 
 Lbl 1
-(C-A)²+(D-B)²→N
-Disp √(N)
-
+√((C-A)²+(D-B)²)→N
+Disp N
 prgmRADSIM
-
 If I=1
 Then
 Disp H
 Else
-If H=1
-Then
-Disp "√(",I,")"
-Else
-Disp H,"√(",I,")"
-End
+Disp H,I
 End
 Stop
 
@@ -30,7 +22,7 @@ Disp (A+C)/2,(B+D)/2
 Stop
 
 Lbl 3
-Disp 2*C-A,2*D-B
+Disp (2*C)-A,(2*D)-B
 Stop
 
 Lbl 4

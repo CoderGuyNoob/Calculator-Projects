@@ -2,19 +2,16 @@ ClrHome
 Input "X1=",A
 Input "Y1=",B
 Input "D=",C
-
 Menu("MISS","X",1,"Y",2)
 
 Lbl 1
 Input "Y=",D
 C²-(D-B)²→N
-
 If N<0
 Then
 Disp "NO SOL"
 Stop
 End
-
 Disp A+√(N)
 Disp A-√(N)
 Stop
@@ -22,13 +19,11 @@ Stop
 Lbl 2
 Input "X=",D
 C²-(D-A)²→N
-
 If N<0
 Then
 Disp "NO SOL"
 Stop
 End
-
 Disp B+√(N)
 Disp B-√(N)
 Stop
